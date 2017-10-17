@@ -5,7 +5,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="shower/themes/ribbon-mod/styles/screen-16x10.css">
+	<link rel="stylesheet" href="shower/themes/ribbon-mod/styles/screen-4x3.css">
+	<link rel="stylesheet" href="shower/themes/ribbon-mod/styles/mod.css">
 </head>
 <body class="shower list">
 
@@ -19,11 +20,11 @@
 
 		<ul>
 			<li>Derivatives and transformations</li>
-			<li>Rendering images in Preside</li>
-			<li>Current limitations of derivatives</li>
-			<li>New features in Preside 10.9</li>
-			<li>Responsive images</li>
-			<li>Demonstration in Preside</li>
+			<li class="next">Rendering images in Preside</li>
+			<li class="next">Current limitations of derivatives</li>
+			<li class="next">New features in Preside 10.9</li>
+			<li class="next">Responsive images</li>
+			<li class="next">Demonstration in Preside</li>
 		</ul>
 	</section>
 
@@ -32,13 +33,13 @@
 
 		<ul>
 			<li>Programmatically defined rules to transform assets</li>
-			<li>Preside has a number of built-in derivatives
+			<li class="next">Preside has a number of built-in derivatives
 				<ul>
-					<li><code>adminThumbnail</code></li>
-					<li><code>pickerIcon</code></li>
+					<li class="next"><code>adminThumbnail</code></li>
+					<li class="next"><code>pickerIcon</code></li>
 				</ul>
 			</li>
-			<li>Can be chained, for example to create a PDF page image before resizing</li>
+			<li class="next">Can be chained, for example to create a PDF page image before resizing</li>
 		</ul>
 	</section>
 
@@ -47,9 +48,9 @@
 
 		<ul>
 			<li>Requires <code>width</code> and <code>height</code> arguments</li>
-			<li>Optionally specify <code>quality</code> (defaults to "highPerformance")</li>
-			<li>Will resize the image to be contained within the dimensions</li>
-			<li>Maintains the image’s aspect ratio</li>
+			<li class="next">Optionally specify <code>quality</code> (defaults to "highPerformance")</li>
+			<li class="next">Will resize the image to be contained within the dimensions</li>
+			<li class="next">Maintains the image’s aspect ratio</li>
 		</ul>
 	</section>
 
@@ -57,14 +58,12 @@
 		<h2>Transformation: shrinkToFit</h2>
 
 		<div>
-			<p><code>pageThumbnail</code> is one of Preside’s built-in derivatives:</p>
-
 			<pre>
-				<code>settings.assetManager.derivatives.pageThumbnail = {</code>
+				<code>settings.assetManager.derivatives.adminCropping = {</code>
 				<code>	  permissions     = "inherit"</code>
 				<code>	, transformations = [ {</code>
 				<code>		  method = "shrinkToFit"</code>
-				<code>		, args   = { width=100, height=100 }</code>
+				<code>		, args   = { width=300, height=300 }</code>
 				<code>	  } ]</code>
 				<code>};</code>
 			</pre>
@@ -80,7 +79,7 @@
 	<section class="slide">
 		<h2>Transformation: shrinkToFit</h2>
 
-		<img src="img/country-lane.jpg" width="100" style="padding:20px 0;background: none;">
+		<img src="img/country-lane.jpg" width="300" style="padding:60px 0;background: none;">
 	</section>
 
 	<section class="slide">
@@ -88,8 +87,8 @@
 
 		<ul>
 			<li>Takes <code>width</code> and/or <code>height</code> arguments</li>
-			<li>Optionally specify <code>quality</code> (defaults to "highPerformance")</li>
-			<li>Optionally specify <code>maintainAspectRatio</code> (defaults to false)</li>
+			<li class="next">Optionally specify <code>quality</code> (defaults to "highPerformance")</li>
+			<li class="next">Optionally specify <code>maintainAspectRatio</code> (defaults to false)</li>
 		</ul>
 	</section>
 
@@ -98,7 +97,7 @@
 
 		<pre>
 			<code>settings.assetManager.derivatives.width300 = {</code>
-			<code>	  permissions     = "inherit"</code>
+			<code class="mark next">	  inEditor = true</code>
 			<code>	, transformations = [ {</code>
 			<code>		  method = "resize"</code>
 			<code>		, args   = { width=300 }</code>
@@ -124,11 +123,10 @@
 
 		<pre>
 			<code>settings.assetManager.derivatives.square300 = {</code>
-			<code>	  permissions     = "inherit"</code>
-			<code>	, transformations = [ {</code>
+			<code>	transformations = [ {</code>
 			<code>		  method = "resize"</code>
 			<code>		, args   = { width=300, height=300 }</code>
-			<code>	  } ]</code>
+			<code>	} ]</code>
 			<code>};</code>
 		</pre>
 	</section>
@@ -150,16 +148,13 @@
 
 		<pre>
 			<code>settings.assetManager.derivatives.square300 = {</code>
-			<code>	  permissions     = "inherit"</code>
-			<code>	, transformations = [ {</code>
+			<code>	transformations = [ {</code>
 			<code>		  method = "resize"</code>
 			<code>		, args   = {</code>
-			<code>			  width               = 300</code>
-			<code>			, height              = 300</code>
-			<code>			, maintainAspectRatio = true</code>
+			<code>			  width = 300, height = 300</code>
+			<code class="mark next">			, maintainAspectRatio = true</code>
 			<code>		  }</code>
-			<code>	  } ]</code>
-			<code>};</code>
+			<code>	} ] };</code>
 		</pre>
 	</section>
 
@@ -176,9 +171,7 @@
 	</section>
 
 	<section class="slide">
-		<h2>Rendering images</h2>
-
-		<p>Method 1: use <code>event.buildLink()</code></p>
+		<h2>Rendering images: buildLink()</h2>
 
 		<pre>
 			<code>imageUrl = event.buildLink(</code>
@@ -188,36 +181,19 @@
 		</pre>
 
 		<ul>
-			<li>returns the URL of the image</li>
-			<li>omitting <code>derivative</code> will return the original image</li>
+			<li class="next">returns the URL of the image</li>
+			<li class="next">omitting <code>derivative</code> will return the original image</li>
 		</ul>
 	</section>
 
 	<section class="slide">
-		<h2>Rendering images</h2>
-
-		<p>Method 2: use <code>renderAsset()</code></p>
-
-		<pre>
-			<code>renderedImage = renderAsset(</code>
-			<code>	  assetId = "..."</code>
-			<code>	, args    = { derivative="bannerImage" }</code>
-			<code>);</code>
-		</pre>
-	</section>
-
-	<section class="slide">
-		<h2>Rendering images</h2>
-
-		<p>Method 2: use <code>renderAsset()</code></p>
+		<h2>Rendering images: renderAsset()</h2>
 
 		<pre>
 			<code>renderedImage = renderAsset(</code>
 			<code>	  assetId = "..."</code>
 			<code>	, args    = {</code>
 			<code>		  derivative = "bannerImage"</code>
-			<code>		, class      = "customClass"</code>
-			<code>		, label      = "Image description"</code>
 			<code>	  }</code>
 			<code>);</code>
 		</pre>
@@ -228,19 +204,16 @@
 	</section>
 
 	<section class="slide">
-		<h2>Custom image renderer</h2>
-
-		<ul>
-			<li>By default, <code>renderAsset()</code> uses the default renderer for the file type, e.g. <code>renderers.asset.image.default</code></li>
-			<li>Renderer can be just a view, or can have a handler</li>
-			<li>Renderer can be targeted at specific filetypes, e.g. <code>renderers.asset.jpg.default</code></li>
-			<li>Specify a context to use a custom renderer</li>
-		</ul>
+		<h2>Rendering images: renderAsset()</h2>
 
 		<pre>
 			<code>renderedImage = renderAsset(</code>
 			<code>	  assetId = "..."</code>
-			<code>	, context = "banner"</code>
+			<code>	, args    = {</code>
+			<code>		  derivative = "bannerImage"</code>
+			<code class="mark">		, class      = "customClass"</code>
+			<code class="mark">		, label      = "Image description"</code>
+			<code>	  }</code>
 			<code>);</code>
 		</pre>
 	</section>
@@ -248,14 +221,39 @@
 	<section class="slide">
 		<h2>Custom image renderer</h2>
 
-		<p>If context is "banner", a JPEG image asset would be rendered using the first of these that is available:</p>
+		<ul>
+			<li>By default, <code>renderAsset()</code> uses the default renderer for the file type, e.g. <code>renderers.asset.image.default</code></li>
+			<li class="next">Renderers are viewlets: can be just a view, or can have a handler</li>
+			<li class="next">Renderer can be targeted at specific filetypes, e.g. <code>renderers.asset.jpg.default</code></li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>Custom image renderer</h2>
 
 		<ul>
-			<li>renderers.asset.jpg.banner</li>
-			<li>renderers.asset.image.banner</li>
-			<li>renderers.asset.jpg.default</li>
-			<li>renderers.asset.image.default</li>
-			<li>renderers.asset.default</li>
+			<li>Specify a context to use a custom renderer</li>
+		</ul>
+
+		<pre>
+			<code>renderedImage = renderAsset(</code>
+			<code>	  assetId = "..."</code>
+			<code class="mark">	, context = "banner"</code>
+			<code>);</code>
+		</pre>
+	</section>
+
+	<section class="slide">
+		<h2>Custom image renderer</h2>
+
+		<p>If context is <code>banner</code>, a JPEG image asset would be rendered using the first of these that is available:</p>
+
+		<ul>
+			<li class="next"><code>renderers.asset.jpg.banner</code></li>
+			<li class="next"><code>renderers.asset.image.banner</code></li>
+			<li class="next"><code>renderers.asset.jpg.default</code></li>
+			<li class="next"><code>renderers.asset.image.default</code></li>
+			<li class="next"><code>renderers.asset.default</code></li>
 		</ul>
 	</section>
 
@@ -266,16 +264,24 @@
 
 		<pre>
 			<code>&lt;cfscript&gt;</code>
-			<code>    id       = args.id    ?: "";</code>
 			<code>    label    = args.label ?: "";</code>
 			<code>    imageUrl = event.buildLink(</code>
-			<code>    	  assetId    = id</code>
+			<code>    	  assetId    = args.id ?: ""</code>
 			<code>    	, derivative = "bannerImage"</code>
 			<code>    );</code>
 			<code>&lt;/cfscript&gt;</code>
+		</pre>
+	</section>
+
+	<section class="slide">
+		<h2>Custom image renderer</h2>
+
+		<p><code>/application/views/renderers/asset/image/banner.cfm</code></p>
+
+		<pre style="counter-reset: code 7;">
 			<code>&lt;cfoutput&gt;</code>
 			<code>    &lt;div class="banner-image"&gt;</code>
-			<code>        &lt;img src="#imageUrl#" alt="#label#" title="#label#" /&gt;</code>
+			<code>        &lt;img src="#imageUrl#" alt="#label#" /&gt;</code>
 			<code>    &lt;/div&gt;</code>
 			<code>&lt;/cfoutput&gt;</code>
 		</pre>
@@ -283,8 +289,6 @@
 
 	<section class="slide">
 		<h2>Resize limitations (1)</h2>
-
-		<p>Take this image as an example:</p>
 
 		<img src="img/puffin-1.jpg">
 	</section>
@@ -311,11 +315,11 @@
 		<p>Previous options for dealing with this:</p>
 
 		<ol>
-			<li>Live with the bad cropping</li>
-			<li>Upload an extra asset to the page — the same source image, but pre-cropped externally
+			<li class="next">Live with the bad cropping</li>
+			<li class="next">Upload an extra asset to the page — the same source image, but pre-cropped externally
 				<ul>
-					<li>Places extra burden on the user</li>
-					<li>Makes our page object untidy</li>
+					<li class="next">Places extra burden on the user</li>
+					<li class="next">Makes our page object untidy</li>
 				</ul>
 			</li>
 		</ol>
@@ -356,11 +360,7 @@
 	<section class="slide">
 		<h2>Resize limitations (2)</h2>
 
-		<div>
-			<p>Here is another sample image:</p>
-
-			<img src="img/puffin-2.jpg" height="400">
-		</div>
+		<img src="img/puffin-2.jpg" height="400">
 	</section>
 
 	<section class="slide">
@@ -393,17 +393,11 @@
 		<p>Simply tell your derivative to use crop hints:</p>
 
 		<pre>
-			<code>settings.assetManager.derivatives.croppedThumbnail = {</code>
-			<code>	  permissions = "inherit"</code>
-			<code>	, transformations = [ {</code>
-			<code>			  method = "resize"</code>
-			<code>			, args   = {</code>
-			<code>				  width       = 100</code>
-			<code>				, height      = 100</code>
-			<code>				, useCropHint = true</code>
-			<code>			  }</code>
-			<code>	  }	]</code>
-			<code>};</code>
+			<code>args = {</code>
+			<code>	  width       = 100</code>
+			<code>	, height      = 100</code>
+			<code class="mark">	, useCropHint = true</code>
+			<code>}</code>
 		</pre>
 	</section>
 
@@ -420,7 +414,7 @@
 
 		<p>Crop hints are also useful for cropping portraits:</p>
 
-		<img src="img/businessman.jpg" height="350">
+		<img src="img/businessman.jpg" height="300">
 	</section>
 
 	<section class="slide">
@@ -451,28 +445,68 @@
 		<ul>
 			<li>Two different use cases
 				<ul>
-					<li>Different resolutions of the same image</li>
-					<li>Art direction: variations on an image</li>
+					<li class="next">Different resolutions of the same image</li>
+					<li class="next">Art direction: variations on an image</li>
 				</ul>
 			</li>
-			<li>Two methods of implementation
+			<li class="next">Two methods of implementation
 				<ul>
-					<li><code>&lt;img srcset="..."&gt;</code></li>
-					<li><code>&lt;picture/&gt;</code></li>
+					<li class="next"><code>&lt;img srcset="..."&gt;</code></li>
+					<li class="next"><code>&lt;picture/&gt;</code></li>
 				</ul>
 			</li>
-			<li>Only load the preferred image version</li>
-			<li>Excellent support by modern browsers</li>
-			<li>Degrades gracefully</li>
+			<li class="next">Only load the preferred image version</li>
+			<li class="next">Excellent support by modern browsers; degrades gracefully</li>
 		</li>
 	</section>
-
-	<section data-markdown="slides/srcset.md"></section>
 
 	<section class="slide">
 		<h2>srcset</h2>
 
-		<img src="img/caniuse-srcset.png" width="750">
+		<ul>
+			<li>Simplest method</li>
+			<li class="next">Ideal for alternate resolutions (e.g. Retina)</li>
+			<li class="next">Browser does the hard work</li>
+			<li class="next">Falls back to <code>src</code> image if not supported</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>srcset</h2>
+
+		<img src="img/caniuse-srcset.png" width="700">
+	</section>
+
+	<section class="slide">
+		<h2>srcset</h2>
+
+		<pre>
+			<code>&lt;img src="small.jpg"</code>
+			<code>	srcset="medium.jpg 1000w, large 2000w"</code>
+			<code class="next mark">	sizes="(max-width: 480px) 100vw, 50vw"</code>
+			<code>	alt="..."&gt;</code>
+		</pre>
+
+		<ul>
+			<li class="next"><code>sizes</code> is optional; defaults to image being 100% wide</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>picture</h2>
+
+		<ul>
+			<li>More complex, but more controllable</li>
+			<li class="next">Best for art direction</li>
+			<li class="next"><code>srcset</code> can include multiple resolutions</li>
+			<li class="next">Falls back to <code>&lt;img&gt;</code> content if not supported</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<h2>picture</h2>
+
+		<img src="img/caniuse-picture.png" width="700">
 	</section>
 
 	<section class="slide">
@@ -486,19 +520,6 @@
 			<code>	&lt;img src="medium.jpg" alt="..."&gt;</code>
 			<code>&lt;/picture&gt;</code>
 		</pre>
-
-		<ul>
-			<li>More complex, but more controllable</li>
-			<li>Best for art direction</li>
-			<li><code>srcset</code> can include multiple resolutions</li>
-			<li>Falls back to <code>&lt;img&gt;</code> content if not supported</li>
-		</ul>
-	</section>
-
-	<section class="slide">
-		<h2>picture</h2>
-
-		<img src="img/caniuse-picture.png" width="750">
 	</section>
 
 	<section class="slide">
