@@ -1,6 +1,9 @@
 .slide img {
 	border: 6px solid #bbb;
 }
+.slide img.cover {
+	border: none;
+}
 
 .slide pre {
 	color: #575ca7;
