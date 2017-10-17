@@ -152,7 +152,7 @@
 			<code>		  method = "resize"</code>
 			<code>		, args   = {</code>
 			<code>			  width = 300, height = 300</code>
-			<code class="mark next">			, maintainAspectRatio = true</code>
+			<code class="mark">			, maintainAspectRatio = true</code>
 			<code>		  }</code>
 			<code>	} ] };</code>
 		</pre>
@@ -181,7 +181,7 @@
 		</pre>
 
 		<ul>
-			<li class="next">returns the URL of the image</li>
+			<li class="next">returns the URL of the image — use it how you like</li>
 			<li class="next">omitting <code>derivative</code> will return the original image</li>
 		</ul>
 	</section>
@@ -199,7 +199,7 @@
 		</pre>
 
 		<ul>
-			<li>default renderer returns the complete <code>&lt;img&gt;</code> tag</li>
+			<li class="next">default renderer returns the complete <code>&lt;img&gt;</code> tag</li>
 		</ul>
 	</section>
 
@@ -225,17 +225,10 @@
 			<li>By default, <code>renderAsset()</code> uses the default renderer for the file type, e.g. <code>renderers.asset.image.default</code></li>
 			<li class="next">Renderers are viewlets: can be just a view, or can have a handler</li>
 			<li class="next">Renderer can be targeted at specific filetypes, e.g. <code>renderers.asset.jpg.default</code></li>
-		</ul>
-	</section>
-
-	<section class="slide">
-		<h2>Custom image renderer</h2>
-
-		<ul>
-			<li>Specify a context to use a custom renderer</li>
+			<li class="next">Specify a context to use a custom renderer</li>
 		</ul>
 
-		<pre>
+		<pre class="next">
 			<code>renderedImage = renderAsset(</code>
 			<code>	  assetId = "..."</code>
 			<code class="mark">	, context = "banner"</code>
@@ -264,9 +257,10 @@
 
 		<pre>
 			<code>&lt;cfscript&gt;</code>
+			<code>    id       = args.id    ?: "";</code>
 			<code>    label    = args.label ?: "";</code>
 			<code>    imageUrl = event.buildLink(</code>
-			<code>    	  assetId    = args.id ?: ""</code>
+			<code>    	  assetId    = id</code>
 			<code>    	, derivative = "bannerImage"</code>
 			<code>    );</code>
 			<code>&lt;/cfscript&gt;</code>
@@ -278,7 +272,7 @@
 
 		<p><code>/application/views/renderers/asset/image/banner.cfm</code></p>
 
-		<pre style="counter-reset: code 7;">
+		<pre style="counter-reset: code 8;">
 			<code>&lt;cfoutput&gt;</code>
 			<code>    &lt;div class="banner-image"&gt;</code>
 			<code>        &lt;img src="#imageUrl#" alt="#label#" /&gt;</code>
@@ -330,7 +324,7 @@
 
 		<p>Introduced in Preside 10.9</p>
 
-		<img src="img/focal-point.png" height="350">
+		<img src="img/focal-point.png" height="400">
 	</section>
 
 	<section class="slide">
@@ -338,7 +332,7 @@
 
 		<p>Introduced in Preside 10.9</p>
 
-		<img src="img/focal-point-selected.png" height="350">
+		<img src="img/focal-point-selected.png" height="400">
 	</section>
 
 	<section class="slide">
@@ -355,12 +349,17 @@
 		<p>...and our banner derivative:</p>
 
 		<img src="img/puffin-1-banner-focal-point-crop.jpg">
+
+		<ul>
+			<li class="next">the crop is centred around the focal point</li>
+			<li class="next">still uses as much of the image as possible</li>
+		</ul>
 	</section>
 
 	<section class="slide">
 		<h2>Resize limitations (2)</h2>
 
-		<img src="img/puffin-2.jpg" height="400">
+		<img src="img/puffin-2.jpg" height="430">
 	</section>
 
 	<section class="slide">
@@ -369,6 +368,11 @@
 		<p>Resized as a 100x100 thumbnail:</p>
 
 		<img src="img/puffin-2-crop.jpg" height="100">
+
+		<ul>
+			<li class="next">Image is too small to distinguish</li>
+			<li class="next">Cropping a subset of the image still requires an extra asset</li>
+		</ul>
 	</section>
 
 	<section class="slide">
@@ -376,7 +380,7 @@
 
 		<p>Introduced in Preside 10.9</p>
 
-		<img src="img/crop-hint.png" height="350">
+		<img src="img/crop-hint.png" height="400">
 	</section>
 
 	<section class="slide">
@@ -384,7 +388,7 @@
 
 		<p>Introduced in Preside 10.9</p>
 
-		<img src="img/crop-hint-selected.png" height="350">
+		<img src="img/crop-hint-selected.png" height="400">
 	</section>
 
 	<section class="slide">
@@ -407,6 +411,10 @@
 		<p>Now our thumbnail will look like this:</p>
 
 		<img src="img/puffin-2-crop-hint-crop.jpg" height="100">
+
+		<ul>
+			<li class="next">Crop hint area is maximised in resulting image</li>
+		</ul>
 	</section>
 
 	<section class="slide">
@@ -440,7 +448,7 @@
 	</section>
 
 	<section class="slide">
-		<h2>Responsive Images</h2>
+		<h2>Responsive images</h2>
 
 		<ul>
 			<li>Two different use cases
@@ -455,13 +463,14 @@
 					<li class="next"><code>&lt;picture/&gt;</code></li>
 				</ul>
 			</li>
-			<li class="next">Only load the preferred image version</li>
-			<li class="next">Excellent support by modern browsers; degrades gracefully</li>
+			<li class="next">Browser only load the appropriate variant</li>
+			<li class="next">Excellent support by modern browsers</li>
+			<li class="next">Degrades gracefully in older browsers</li>
 		</li>
 	</section>
 
 	<section class="slide">
-		<h2>srcset</h2>
+		<h2>Responsive images: srcset</h2>
 
 		<ul>
 			<li>Simplest method</li>
@@ -472,28 +481,31 @@
 	</section>
 
 	<section class="slide">
-		<h2>srcset</h2>
+		<h2>Responsive images: srcset</h2>
 
-		<img src="img/caniuse-srcset.png" width="700">
+		<img src="img/caniuse-srcset.png" width="750">
+
+		<p class="note">Browser support matrix from caniuse.com</p>
 	</section>
 
 	<section class="slide">
-		<h2>srcset</h2>
+		<h2>Responsive images: srcset</h2>
 
 		<pre>
 			<code>&lt;img src="small.jpg"</code>
-			<code>	srcset="medium.jpg 1000w, large 2000w"</code>
-			<code class="next mark">	sizes="(max-width: 480px) 100vw, 50vw"</code>
+			<code>	srcset="small.jpg 500w, medium.jpg 1000w, large 2000w"</code>
+			<code>	sizes="(max-width: 480px) 100vw, 50vw"</code>
 			<code>	alt="..."&gt;</code>
 		</pre>
 
 		<ul>
+			<li class="next">Specify width of each variant in pixels</li>
 			<li class="next"><code>sizes</code> is optional; defaults to image being 100% wide</li>
 		</ul>
 	</section>
 
 	<section class="slide">
-		<h2>picture</h2>
+		<h2>Responsive images: picture</h2>
 
 		<ul>
 			<li>More complex, but more controllable</li>
@@ -504,13 +516,15 @@
 	</section>
 
 	<section class="slide">
-		<h2>picture</h2>
+		<h2>Responsive images: picture</h2>
 
-		<img src="img/caniuse-picture.png" width="700">
+		<img src="img/caniuse-picture.png" width="750">
+
+		<p class="note">Browser support matrix from caniuse.com</p>
 	</section>
 
 	<section class="slide">
-		<h2>picture</h2>
+		<h2>Responsive images: picture</h2>
 
 		<pre>
 			<code>&lt;picture&gt;</code>
@@ -520,6 +534,11 @@
 			<code>	&lt;img src="medium.jpg" alt="..."&gt;</code>
 			<code>&lt;/picture&gt;</code>
 		</pre>
+
+		<ul>
+			<li class="next">Styling is done on the <code>&lt;img&gt;</code> element</li>
+			<li class="next">Make it more granular by multiple <code>srcset</code> items</li>
+		</ul>
 	</section>
 
 	<section class="slide">
